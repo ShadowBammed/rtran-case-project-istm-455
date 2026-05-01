@@ -1,10 +1,15 @@
 import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { createDb } from './db.js';
 import { contactsRouter } from './routes/contacts.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export function createApp(db) {
   const app = express();
   app.use(express.json());
+  app.use(express.static(path.join(__dirname, '..', 'public')));
 
   app.get('/health', (req, res) => res.json({ status: 'ok' }));
   app.use('/contacts', contactsRouter(db));
