@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  contacts-api:
+    build: .
+    ports:
+      - "3443:3443"
+    volumes:
+      - contacts-data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=3443
+      - DB_PATH=/app/data/contacts.db
+    restart: unless-stopped
+
+volumes:
+  contacts-data:
